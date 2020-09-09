@@ -1,0 +1,8 @@
+{
+  "url": "https://yourDevServiceNowInstanceCanonicalHostname/",
+  "auth": {
+    "username": "devUsername",
+    "password": "devUserPassword"
+  },
+  "serviceNowTable": "change_request"
+}

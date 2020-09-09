@@ -1,0 +1,21 @@
+{
+  "name": "@acme/adapter-change_management",
+  "version": "0.1.0",
+  "description": "An IAP change management adapter.",
+  "main": "main.js",
+  "scripts": {
+    "test": "Accept the default offered for test command"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ACME"
+  },
+  "keywords": [
+    "ACME"
+  ],
+  "author": "ACME",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}

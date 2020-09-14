@@ -152,6 +152,16 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * get() takes a callback function.
      */
+
+     	const requestOptions = {
+    method: 'Get',
+    auth: {
+      user: options.username,
+      pass: options.password,
+    },
+    baseUrl: options.url,
+    uri: `/api/now/table/${serviceNowTable}?sysparm_limit=1`,
+  };
   }
 
   /**
@@ -170,6 +180,16 @@ class ServiceNowAdapter extends EventEmitter {
      * Note how the object was instantiated in the constructor().
      * post() takes a callback function.
      */
+
+    const requestOptions = {
+    method: 'POST',
+    auth: {
+      user: options.username,
+      pass: options.password,
+    },
+    baseUrl: options.url,
+    uri: `/api/now/table/${serviceNowTable}?sysparm_limit=1`,
+  };
   }
 }
 

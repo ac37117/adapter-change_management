@@ -1,4 +1,4 @@
-/ Import built-in Node.js package path.
+// Import built-in Node.js package path.
 const path = require('path');
 
 /**

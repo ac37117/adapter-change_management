@@ -18,5 +18,6 @@
   "dependencies": {
     "@itentialopensource/adapter-db_mongo": "^0.2.2",
     "request": "^2.88.2"
-  }
+  },
+  "devDependencies": {}
 }

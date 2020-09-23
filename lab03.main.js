@@ -1,5 +1,5 @@
 // Update this constant with your ServiceNow credentials
-const options = {
+const Options = {
   url: 'https://dev99826.service-now.com/',
   username: 'admin',
   password: 'MAJKVcool11'
@@ -94,6 +94,26 @@ function processRequestResults(error, response, body, callback) {
    * This function must not check for a hibernating instance;
    * it must call function isHibernating.
    */
+       /**
+     * Process ServiceNow error, response and body.
+     * Check error and response code to make sure
+     * response is good.
+     */
+	 let callbackData = null;
+     let callbackError = null;
+    if (error) {
+      console.error('Error present.');
+      callbackError = error;
+    } else if (!validResponseRegex.test(response.statusCode)) {
+      console.error('Bad response code.');
+      callbackError = response;
+    } else if (isHibernating(response)) {
+      callbackError = 'Service Now instance is hibernating';
+      console.error(callbackError);
+    } else {
+      callbackData = response;
+    }
+    return callback(callbackData, callbackError);
 }
 
 
@@ -125,7 +145,15 @@ function sendRequest(callOptions, callback) {
    * from the previous lab. There should be no
    * hardcoded values.
    */
-  const requestOptions = {};
+    const requestOptions = {
+	method:callOptions.method,
+    auth: {
+      user: Options.username,
+      pass: Options.password,
+    },
+    baseUrl: Options.url,
+    uri:uri
+  };
   request(requestOptions, (error, response, body) => {
     processRequestResults(error, response, body, (processedResults, processedError) => callback(processedResults, processedError));
   });

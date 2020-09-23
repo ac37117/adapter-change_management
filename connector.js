@@ -1,3 +1,4 @@
+
 const request=require('request');
 
 const validResponseRegex= /(2\d\d)/;
@@ -41,50 +42,46 @@ this.options=options;
  */
 
 constructUri(serviceNowTable, query=null) {
-leturi=`/api/now/table/${serviceNowTable}`;
+let uri=`/api/now/table/${serviceNowTable}`;
 if (query) {
 uri=uri+'?'+query;
  }
-returnuri;
+return uri;
 }
 
 isHibernating(response) {
-returnresponse.body.includes('Instance Hibernating page')
+return response.body.includes('Instance Hibernating page')
 &&response.body.includes('<html>')
 &&response.statusCode===200;
 }
 
 processRequestResults(error, response, body, callback) {
-letcallbackData=null;
-letcallbackError=null;
+let callbackData=null;
+let callbackError=null;
 if (error) {
 console.error('Error present.');
 callbackError=error;
- }
-elseif (!validResponseRegex.test(response.statusCode)) 
-{
+ } else if (!validResponseRegex.test(response.statusCode)) {
 console.error('Bad response code.');
 callbackError=response;
- } elseif (this.isHibernating(response)) 
- {
+ } else if (this.isHibernating(response)) {
 callbackError='Service Now instance is hibernating';
 console.error(processedError);
- } else 
-{
+ } else {
 callbackData=response;
  }
 
-returncallback(callbackData, callbackError);
+return callback(callbackData, callbackError);
 }
 
 sendRequest(getCallOptions, callback) {
-leturi;
+let uri;
 if (getCallOptions.query)
 uri=this.constructUri(getCallOptions.serviceNowTable, getCallOptions.query);
 else
 uri=this.constructUri(getCallOptions.serviceNowTable);
 
-constrequestOptions= {
+const requestOptions= {
 method:getCallOptions.method, 
 auth: {
 user:getCallOptions.username,
@@ -114,14 +111,14 @@ this.processRequestResults(error, response, body, (processedResults, processedEr
  */
 
 get(callback) { 
-letgetCallOptions= { ...this.options };
+let getCallOptions= { ...this.options };
 getCallOptions.method='GET';
 getCallOptions.query='sysparm_limit=1';
 this.sendRequest(getCallOptions, (results, error) =>callback(results, error));
  }
 
 post(callback) { 
-letgetCallOptions= { ...this.options }; 
+let getCallOptions= { ...this.options }; 
 getCallOptions.method='POST';
 this.sendRequest(getCallOptions, (results, error) =>callback(results, error));
  }

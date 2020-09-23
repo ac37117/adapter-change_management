@@ -24,7 +24,7 @@ const ServiceNowConnector=require(path.join(__dirname, './connector.js'));
  */
 function mainOnObject() {
 // Instantiate an object from class ServiceNowConnector.
-const connector=newServiceNowConnector(options);
+const connector=new ServiceNowConnector(options);
 // Test the object's get and post methods.
 // You must write the arguments for get and post.
 connector.get((data, error) => {

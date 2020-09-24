@@ -146,6 +146,7 @@ class ServiceNowAdapter extends EventEmitter {
    *   handles the response.
    */
   getRecord(callback) {
+    connector.get();
     /**
      * Write the body for this function.
      * The function is a wrapper for this.connector's get() method.
@@ -164,6 +165,7 @@ class ServiceNowAdapter extends EventEmitter {
    *   handles the response.
    */
   postRecord(callback) {
+     connector.post();
     /**
      * Write the body for this function.
      * The function is a wrapper for this.connector's post() method.

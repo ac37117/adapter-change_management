@@ -84,20 +84,26 @@ class ServiceNowAdapter extends EventEmitter {
   }
 
   /**
-   * @memberof ServiceNowAdapter
-   * @method healthcheck
-   * @summary Check ServiceNow Health
-   * @description Verifies external system is available and healthy.
-   *   Calls method emitOnline if external system is available.
-   *
-   * @param {ServiceNowAdapter~requestCallback} [callback] - The optional callback
-   *   that handles the response.
-   */
-  healthcheck(callback) {
-    // We will build this method in a later lab. For now, it will emulate
-    // a healthy integration by emmitting ONLINE.
-    this.emitOnline();
-  }
+ * @memberof ServiceNowAdapter
+ * @method healthcheck
+ * @summary Check ServiceNow Health
+ * @description Verifies external system is available and healthy.
+ *   Calls method emitOnline if external system is available.
+ *
+ * @param {ServiceNowAdapter~requestCallback} [callback] - The optional callback
+ *   that handles the response.
+ */
+healthcheck(callback) {
+ this.getRecord((result, error) => {
+   if (error) {
+       this.emitOffline();
+       log.error("Error at "+ this.id + " ServiceNow adapter instance : " + error);
+   } else {
+       this.emitOnline();
+       log.debug(this.id + " ServiceNow adapter instance is available now");
+   }
+ });
+}
 
   /**
    * @memberof ServiceNowAdapter
@@ -146,12 +152,7 @@ class ServiceNowAdapter extends EventEmitter {
    *   handles the response.
    */
   getRecord(callback) {
-    /**
-     * Write the body for this function.
-     * The function is a wrapper for this.connector's get() method.
-     * Note how the object was instantiated in the constructor().
-     * get() takes a callback function.
-     */
+    this.connector.get((data, error) => callback(data, error));
   }
 
   /**
@@ -164,6 +165,12 @@ class ServiceNowAdapter extends EventEmitter {
    *   handles the response.
    */
   postRecord(callback) {
+     this.connector.post((data, error) => {
+        if (error) {
+            console.error(`\nError returned from POST request:\n${JSON.stringify(error)}`);
+        }
+        console.log(`\nResponse returned from POST request:\n${JSON.stringify(data)}`)
+     });
     /**
      * Write the body for this function.
      * The function is a wrapper for this.connector's post() method.
